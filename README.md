@@ -11,7 +11,7 @@ On startup, call `registerHandlers`
 ```javascript
 import path from 'path'
 import fastify from 'fastify'
-import registerHandlers from 'register-server-handlers'
+import { registerHandlers } from 'register-server-handlers'
 
 const server = fastify({
   ignoreTrailingSlash: true,
