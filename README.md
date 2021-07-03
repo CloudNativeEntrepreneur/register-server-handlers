@@ -1,6 +1,6 @@
 # register-server-handlers
 
-Registers a folder of handlers as HTTP POST routes on a server that parses cloudevents from payload before sending to handler
+Registers a folder of handlers as HTTP POST routes on a server
 
 ## Usage
 
