@@ -1,0 +1,46 @@
+{
+  "name": "register-server-handlers",
+  "version": "0.0.0-development",
+  "description": "Registers a folder of handlers as HTTP POST routes on a server (fastify, express) that parses cloudevents from payload before sending to handler",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "babel src -d dist",
+    "lint": "eslint src __tests__ --ext=.js,.mjs",
+    "lint:fix": "eslint --fix src __tests__ --ext=.js,.mjs",
+    "test": "DEBUG=tests jest --no-cache --config ./jest.json --coverage --verbose",
+    "test:watch": "DEBUG=tests jest --config jest.json --watch --coverage --verbose",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CloudNativeEntrepreneur/register-server-handlers.git"
+  },
+  "author": "Patrick Lee Scott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CloudNativeEntrepreneur/register-server-handlers/issues"
+  },
+  "homepage": "https://github.com/CloudNativeEntrepreneur/register-server-handlers#readme",
+  "dependencies": {
+    "axios": "0.21.1",
+    "debug": "4.3.1",
+    "objectify-folder": "1.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/plugin-transform-runtime": "7.14.5",
+    "@babel/preset-env": "7.14.5",
+    "eslint": "7.28.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-standard": "4.1.0",
+    "husky": "6.0.0",
+    "jest": "27.0.6",
+    "lint-staged": "^11.0.0",
+    "semantic-release": "^17.4.4"
+  }
+}
