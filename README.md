@@ -43,9 +43,7 @@ Each handler in the given directory must export a named function `handle`
 For example, `src/handlers/example.handle.js`:
 
 ```javascript
-export const handle = async (event, reply) => {
-  // get data, type, and source from cloud event
-  const { data, type, source } = event
+export const handle = async (req, reply) => {
   // do stuff
   // then reply
   return reply.code(202).send({ status: 'complete' })
