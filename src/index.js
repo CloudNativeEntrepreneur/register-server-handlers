@@ -2,9 +2,9 @@ import path from 'path'
 import debug from 'debug'
 import objectifyFolder from 'objectify-folder/modules.js'
 
-const info = debug('register-handlers')
+const info = debug('register-server-handlers')
 
-export default async function (options) {
+export const registerHandlers = async (options) => {
   const handlers = await objectifyFolder({
     fn: validateModuleAndAddToHandlers,
     path: options.path
