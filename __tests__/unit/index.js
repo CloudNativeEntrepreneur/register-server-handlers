@@ -1,4 +1,4 @@
-import registerHandlers, { validateModuleAndAddToHandlers } from 'index'
+import { registerHandlers, validateModuleAndAddToHandlers } from 'index'
 
 jest.mock('objectify-folder/modules.js', () => ({
   __esModule: true,

@@ -3,7 +3,6 @@
   "version": "0.0.0-development",
   "description": "Registers a folder of handlers as HTTP POST routes on a server (fastify, express) that parses cloudevents from payload before sending to handler",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
     "build": "babel src -d dist",
     "lint": "eslint src __tests__ --ext=.js,.mjs",
