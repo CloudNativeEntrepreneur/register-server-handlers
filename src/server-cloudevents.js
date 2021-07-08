@@ -1,8 +1,8 @@
 import { HTTP } from 'cloudevents'
 import debug from 'debug'
 
-const info = debug('register-handlers:server-cloudevents')
-const error = debug('register-handlers:server-cloudevents:error')
+const info = debug('register-server-handlers:server-cloudevents')
+const error = debug('register-server-handlers:server-cloudevents:error')
 
 export const registerHandlerRoute = (server, handler, serverPath = '/') => {
   info(`registering route /${handler.type}`)
