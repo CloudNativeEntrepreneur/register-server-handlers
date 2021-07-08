@@ -28,6 +28,19 @@ describe('server-cloudevents', () => {
 
       expect(server.post).toBeCalledWith('/example.command', expect.any(Function))
     })
+    it('should register each handler to the server as a post request with serverPath as prefix', () => {
+      const server = {
+        post: jest.fn()
+      }
+      const handler = {
+        type: 'example.command',
+        handle: jest.fn()
+      }
+      const serverPath = '/test/'
+      registerHandlerRoute(server, handler, serverPath)
+
+      expect(server.post).toBeCalledWith('/test/example.command', expect.any(Function))
+    })
   })
 
   describe('parseCloudEventForHandler', () => {

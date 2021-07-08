@@ -5,8 +5,8 @@ const info = debug('register-server-handlers:server-cloudevents')
 const error = debug('register-server-handlers:server-cloudevents:error')
 
 export const registerHandlerRoute = (server, handler, serverPath = '/') => {
-  info(`registering route /${handler.type}`)
-  server.post(`/${handler.type}`, parseCloudEventForHandler(handler))
+  info(`registering route ${serverPath}${handler.type}`)
+  server.post(`${serverPath}${handler.type}`, parseCloudEventForHandler(handler))
 }
 
 export const parseCloudEventForHandler = (handler) => (req, reply) => {
