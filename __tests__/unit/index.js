@@ -16,23 +16,21 @@ jest.mock('server')
 jest.mock('server-cloudevents')
 
 describe('registerHandlers', () => {
-
   it('should throw an error if misconfigured', async () => {
     const server = {
       post: jest.fn()
     }
     const path = '/dir'
-    let handlers
 
     try {
-      handlers = await registerHandlers({
+      await registerHandlers({
         server
       })
     } catch (err) {
       expect(err).toEqual(Error('path is required'))
     }
     try {
-      handlers = await registerHandlers({
+      await registerHandlers({
         path
       })
     } catch (err) {
@@ -51,7 +49,7 @@ describe('registerHandlers', () => {
     const { registerHandlerRoute } = require('server')
 
     expect(registerHandlerRoute).toBeCalledWith(
-      server, 
+      server,
       {
         handle: expect.any(Function),
         type: 'example.command'
@@ -77,7 +75,7 @@ describe('registerHandlers', () => {
     const { registerHandlerRoute } = require('server-cloudevents')
 
     expect(registerHandlerRoute).toBeCalledWith(
-      server, 
+      server,
       {
         handle: expect.any(Function),
         type: 'example.command'
