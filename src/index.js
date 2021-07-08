@@ -1,10 +1,17 @@
 import path from 'path'
 import debug from 'debug'
 import objectifyFolder from 'objectify-folder/modules.js'
+import { registerHandlerRoute as registerCloudEventsHandlerRoute } from './server-cloudevents'
+import { registerHandlerRoute } from './server'
 
 const info = debug('register-server-handlers')
 
 export const registerHandlers = async (options) => {
+  const { server, path, serverPath = '/', cloudevents = false } = options
+
+  if (!server) throw new Error('server is required')
+  if (!path) throw new Error('path is required')
+
   const handlers = await objectifyFolder({
     fn: validateModuleAndAddToHandlers,
     path: options.path
@@ -18,8 +25,12 @@ export const registerHandlers = async (options) => {
     info('registering handler routes to server')
     Object.keys(handlers).forEach(function (key) {
       const handler = handlers[key]
-      server.post(`/${handler.type}`, handler.handle)
-      info(`/${handler.type} registered`)
+
+      if (cloudevents) {
+        registerCloudEventsHandlerRoute(server, handler, serverPath)
+      } else {
+        registerHandlerRoute(server, handler, serverPath)
+      }
     })
 
     resolve(handlers)
