@@ -43,7 +43,10 @@ describe('registerHandlers', () => {
     }
     const handlers = await registerHandlers({
       path: '/path/fake/for/tests',
-      server
+      server,
+      handlerOptions: {
+        sync: true
+      }
     })
 
     const { registerHandlerRoute } = require('server')
@@ -54,7 +57,10 @@ describe('registerHandlers', () => {
         handle: expect.any(Function),
         type: 'example.command'
       },
-      '/'
+      '/',
+      {
+        sync: true
+      }
     )
     expect(handlers['example.command']).toEqual({
       type: 'example.command',
@@ -80,7 +86,8 @@ describe('registerHandlers', () => {
         handle: expect.any(Function),
         type: 'example.command'
       },
-      '/cloudevent/'
+      '/cloudevent/',
+      {}
     )
     expect(handlers['example.command']).toEqual({
       type: 'example.command',

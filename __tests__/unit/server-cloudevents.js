@@ -90,13 +90,18 @@ describe('server-cloudevents', () => {
       }
       parseCloudEventForHandler(handler)(req, reply)
 
-      expect(handler.handle).toBeCalledWith(expect.any(Object), reply, {
-        type: 'example.commmand',
-        data: {
-          id: 1
+      expect(handler.handle).toBeCalledWith(
+        expect.any(Object),
+        reply,
+        {
+          type: 'example.commmand',
+          data: {
+            id: 1
+          },
+          source: 'mock'
         },
-        source: 'mock'
-      })
+        {}
+      )
     })
   })
 })
