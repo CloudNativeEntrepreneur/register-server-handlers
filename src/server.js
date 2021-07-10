@@ -5,7 +5,7 @@ const info = debug('register-server-handlers:server')
 
 export const registerHandlerRoute = (server, handler, serverPath = '/', handlerOptions = {}) => {
   info(`registering route ${serverPath}${handler.type}`)
-  server.post(`${serverPath}${handler.type}`, wrapInputInCloudEventForHandler(handler.handle, handlerOptions))
+  server.post(`${serverPath}${handler.type}`, wrapInputInCloudEventForHandler(handler, handlerOptions))
 }
 
 export const wrapInputInCloudEventForHandler = (handler, handlerOptions = {}) => (req, reply) => {
