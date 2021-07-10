@@ -7,7 +7,7 @@ import { registerHandlerRoute } from './server'
 const info = debug('register-server-handlers')
 
 export const registerHandlers = async (options) => {
-  const { server, path, serverPath = '/', cloudevents = false } = options
+  const { server, path, serverPath = '/', cloudevents = false, handlerOptions = {} } = options
 
   if (!server) throw new Error('server is required')
   if (!path) throw new Error('path is required')
@@ -27,9 +27,9 @@ export const registerHandlers = async (options) => {
       const handler = handlers[key]
 
       if (cloudevents) {
-        registerCloudEventsHandlerRoute(server, handler, serverPath)
+        registerCloudEventsHandlerRoute(server, handler, serverPath, handlerOptions)
       } else {
-        registerHandlerRoute(server, handler, serverPath)
+        registerHandlerRoute(server, handler, serverPath, handlerOptions)
       }
     })
 
