@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/CloudNativeEntrepreneur/register-server-handlers#readme",
   "dependencies": {
-    "@babel/runtime": "7.14.8",
+    "@babel/runtime": "7.15.3",
     "axios": "0.21.1",
     "cloudevents": "4.0.3",
     "debug": "4.3.2",
