@@ -17,10 +17,10 @@ export const parseCloudEventForHandler = (handler, handlerOptions = {}) => (req,
 
     // TODO: feat: filter further via "where" clause for declaritive validation in handlers
 
-    return handler.handle(req, reply, event, handlerOptions)
+    handler.handle(req, reply, event, handlerOptions)
   } catch (err) {
     error(err)
-    return reply.code(415)
+    reply.code(415)
       .header('Content-Type', 'application/json')
       .send(JSON.stringify(err))
   }

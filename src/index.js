@@ -22,7 +22,7 @@ export const registerHandlers = async (options) => {
   return new Promise((resolve, reject) => {
     const { server } = options
 
-    info('registering handler routes to server')
+    info('registering handler routes to server', serverPath)
     Object.keys(handlers).forEach(function (key) {
       const handler = handlers[key]
 

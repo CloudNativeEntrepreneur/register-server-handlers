@@ -17,5 +17,5 @@ export const wrapInputInCloudEventForHandler = (handler, handlerOptions = {}) =>
     data: req.body.input
   })
 
-  return handler.handle(req, reply, event, handlerOptions)
+  handler.handle(req, reply, event, handlerOptions)
 }
