@@ -1,4 +1,5 @@
 [![Release](https://github.com/CloudNativeEntrepreneur/register-server-handlers/actions/workflows/release.yml/badge.svg)](https://github.com/CloudNativeEntrepreneur/register-server-handlers/actions/workflows/release.yml)
+[![codecov](https://codecov.io/gh/cloudnativeentrepreneur/register-server-handlers/branch/master/graph/badge.svg?token=30AlWeV5Zd)](https://codecov.io/gh/cloudnativeentrepreneur/register-server-handlers)
 
 # register-server-handlers
 
