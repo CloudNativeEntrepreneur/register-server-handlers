@@ -31,7 +31,7 @@ export const start = async (server) => {
     server,
     path: path.resolve(process.cwd(), 'src', 'handlers'),
     cloudevents: true,
-    serverPath: '/cloudevents/'
+    serverPath: '/cloudevent/'
   })
 
   try {
@@ -86,12 +86,49 @@ The default server path is `/`, which the filename without the extension is appe
 
 To customize this path, set `serverPath` to a custom value.
 
-For example, if you want to receive cloud events at `/events/${eventname}`
+For example, if you want to receive cloud events at `/cloudevent/${eventname}`
 
 ```javascript
 await registerHandlers({
   server,
   path: path.resolve(process.cwd(), 'src', 'handlers'),
-  serverPath: '/events/'
+  cloudevents: true,
+  serverPath: '/cloudevent/'
 })
+```
+
+# knativebus
+
+The intended usage for this is to build CQRS/ES systems with KNative. If you're interested in doing something similar, this library works well with [knativebus](https://github.com/CloudNativeEntrepreneur/knativebus).
+
+Configured correctly, sending cloudevents to the cloudevent handlers via knativebus can be accomplished with:
+
+```javascript
+await bus.send('example.initialize', { id: 1, name: 'Example 1' })
+```
+
+This would `Trigger` a handler on a service subscibed to the `example-commands` broker (see knative docs for examples of creating brokers). The handler would receive a cloudevent with type `example.initialize`, therefore handled by `src/handlers/example.initialize.js` in the above configuration.
+
+```yaml
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: example.initialize
+spec:
+  broker: example-commands
+  filter:
+    attributes:
+      type: example.initialize
+  subscriber:
+    ref:
+{{- if .Values.knativeDeploy }}
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: example-model
+{{- else }}
+      apiVersion: v1
+      kind: Service
+      name: example-model
+{{- end }}
+    uri: /cloudevent/example.initialize
 ```
