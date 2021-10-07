@@ -1,8 +1,16 @@
 # register-server-handlers
 
-Registers a folder of handlers as HTTP POST routes on a server
+Registers a folder of handlers as HTTP POST routes on a server.
+
+View [on npm](https://www.npmjs.com/package/register-server-handlers).
 
 ## Usage
+
+### Installation
+
+```
+npm install --save register-server-handlers
+```
 
 ### Startup
 
