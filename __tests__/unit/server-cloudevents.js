@@ -1,4 +1,4 @@
-import { registerHandlerRoute, parseCloudEventForHandler } from 'server-cloudevents.js'
+import { registerHandlerRoute, parseCloudEventThenHandle } from 'server-cloudevents.js'
 
 jest.mock('cloudevents', () => ({
   HTTP: {
@@ -15,6 +15,10 @@ jest.mock('cloudevents', () => ({
 }))
 
 describe('server-cloudevents', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('registerHandlerRoute', () => {
     it('should register each handler to the server as a post request', () => {
       const server = {
@@ -43,7 +47,11 @@ describe('server-cloudevents', () => {
     })
   })
 
-  describe('parseCloudEventForHandler', () => {
+  describe('parseCloudEventThenHandle', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
     it('should reply with code 415 if there is an error', () => {
       const handler = {
         type: 'example.command',
@@ -66,7 +74,7 @@ describe('server-cloudevents', () => {
         throw new Error('blow up')
       })
 
-      parseCloudEventForHandler(handler)(req, reply)
+      parseCloudEventThenHandle(handler)(req, reply)
 
       expect(handler.handle).not.toBeCalled()
       expect(reply.code).toBeCalledWith(415)
@@ -88,7 +96,7 @@ describe('server-cloudevents', () => {
           }))
         }))
       }
-      parseCloudEventForHandler(handler)(req, reply)
+      parseCloudEventThenHandle(handler)(req, reply)
 
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
@@ -102,6 +110,57 @@ describe('server-cloudevents', () => {
         },
         {}
       )
+    })
+
+    it('should allow handler to be called if where criteria is met', () => {
+      const handler = {
+        type: 'example.command',
+        handle: jest.fn(),
+        where: (message) => message.data &&
+                            message.data.id
+      }
+      jest.spyOn(handler, 'where')
+      const req = {
+        headers: {},
+        body: {}
+      }
+      const reply = {
+        code: jest.fn(() => ({
+          header: jest.fn(() => ({
+            send: jest.fn()
+          }))
+        }))
+      }
+      parseCloudEventThenHandle(handler)(req, reply)
+
+      expect(handler.where).toBeCalled()
+      expect(handler.handle).toBeCalled()
+    })
+
+    it('should filter messages from hitting handler if they dont match the where filter', () => {
+      const handler = {
+        type: 'example.command',
+        handle: jest.fn(),
+        where: (message) => message.data &&
+                            message.data.foo
+      }
+      jest.spyOn(handler, 'where')
+      const req = {
+        headers: {},
+        body: {}
+      }
+      const reply = {
+        code: jest.fn(() => ({
+          header: jest.fn(() => ({
+            send: jest.fn()
+          }))
+        }))
+      }
+      parseCloudEventThenHandle(handler)(req, reply)
+
+      expect(handler.where).toBeCalled()
+      expect(reply.code).toBeCalledWith(400)
+      expect(handler.handle).not.toBeCalled()
     })
   })
 })

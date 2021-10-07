@@ -5,10 +5,10 @@ const info = debug('register-server-handlers:server')
 
 export const registerHandlerRoute = (server, handler, serverPath = '/', handlerOptions = {}) => {
   info(`registering route ${serverPath}${handler.type}`)
-  server.post(`${serverPath}${handler.type}`, wrapInputInCloudEventForHandler(handler, handlerOptions))
+  server.post(`${serverPath}${handler.type}`, wrapInputInCloudEventThenHandle(handler, handlerOptions))
 }
 
-export const wrapInputInCloudEventForHandler = (handler, handlerOptions = {}) => (req, reply) => {
+export const wrapInputInCloudEventThenHandle = (handler, handlerOptions = {}) => (req, reply) => {
   info(`creating cloudevent from POST for handler ${handler.type}`)
 
   const event = new CloudEvent({
@@ -17,5 +17,11 @@ export const wrapInputInCloudEventForHandler = (handler, handlerOptions = {}) =>
     data: req.body.input
   })
 
-  handler.handle(req, reply, event, handlerOptions)
+  if (typeof handler.where === 'function' && !handler.where(event)) {
+    reply.code(400)
+      .header('Content-Type', 'application/json')
+      .send({ err: '🚨 Message does not match where filter criteria' })
+  } else {
+    handler.handle(req, reply, event, handlerOptions)
+  }
 }
