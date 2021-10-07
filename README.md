@@ -23,7 +23,10 @@ export const start = async (server) => {
   // create post handlers for each file in folder src/handlers at `/<filename without extension>`
   await registerHandlers({
     server,
-    path: path.resolve(process.cwd(), 'src', 'handlers')
+    path: path.resolve(process.cwd(), 'src', 'handlers'),
+    handlerOptions: {
+      sync: true
+    }
   })
 
   // create post handlers for cloudevents with same handlers at `/cloudevents/<filename without extension>`
@@ -45,28 +48,32 @@ export const start = async (server) => {
 start(server)
 ```
 
+This way you can write the handler logic once and handle it via direct HTTP Post or via a CloudEvent, such as when creating a `Trigger` for a Knative Event, or from a Command API, such as Hasura Actions.
+
 ## Handlers
 
 Each handler in the given directory must export a named function `handle`, and optionally, a `where` filter.
 
-For example, `src/handlers/example.handle.js`:
+For example, `src/handlers/example.initialize.js`:
 
 ```javascript
 // if message.data.id is not provided, a 400 response will be sent and the handler will not execute
 // makes for easy, declarative validation and unit testing
 export const where = (message) => message.data && message.data.id
 
-// "message" is a CloudEvent
-export const handle = async (req, reply, message) => {
+// `message` is a CloudEvent
+// `type` is the file name without the extension - `example.initialize`
+export const handle = async (req, reply, message, handlerOptions) => {
   const { data, type, source } = message
   const { id } = message
+  const { sync } = handlerOptions
   // do stuff
   // then reply
   return reply.code(200).send({ status: 'complete' })
 }
 ```
 
-This will register `/example.handle` as an HTTP Post endpoint.
+This will register `/example.initialize` as an HTTP Post endpoint.
 
 ## CloudEvents
 
