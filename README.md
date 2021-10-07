@@ -20,9 +20,18 @@ const server = fastify({
 
 export const start = async (server) => {
 
+  // create post handlers for each file in folder src/handlers at `/<filename without extension>`
   await registerHandlers({
     server,
     path: path.resolve(process.cwd(), 'src', 'handlers')
+  })
+
+  // create post handlers for cloudevents with same handlers at `/cloudevents/<filename without extension>`
+  await registerHandlers({
+    server,
+    path: path.resolve(process.cwd(), 'src', 'handlers'),
+    cloudevents: true,
+    serverPath: '/cloudevents/'
   })
 
   try {
@@ -38,12 +47,19 @@ start(server)
 
 ## Handlers
 
-Each handler in the given directory must export a named function `handle`
+Each handler in the given directory must export a named function `handle`, and optionally, a `where` filter.
 
 For example, `src/handlers/example.handle.js`:
 
 ```javascript
-export const handle = async (req, reply) => {
+// if message.data.id is not provided, a 400 response will be sent and the handler will not execute
+// makes for easy, declarative validation and unit testing
+export const where = (message) => message.data && message.data.id
+
+// "message" is a CloudEvent
+export const handle = async (req, reply, message) => {
+  const { data, type, source } = message
+  const { id } = message
   // do stuff
   // then reply
   return reply.code(200).send({ status: 'complete' })
@@ -62,17 +78,6 @@ await registerHandlers({
   path: path.resolve(process.cwd(), 'src', 'handlers'),
   cloudevents: true
 })
-```
-
-This will cause your handlers to receive a third parameter that contains the cloud event.
-
-```javascript
-export const handle = async (req, reply, event) => {
-  const { data, type, source } = event
-  // do stuff
-  // then reply
-  return reply.code(200).send({ status: 'complete' })
-}
 ```
 
 ## serverPath
