@@ -1,3 +1,5 @@
+[![Release](https://github.com/CloudNativeEntrepreneur/register-server-handlers/actions/workflows/release.yml/badge.svg)](https://github.com/CloudNativeEntrepreneur/register-server-handlers/actions/workflows/release.yml)
+
 # register-server-handlers
 
 Registers a folder of handlers as HTTP POST routes on a server.
