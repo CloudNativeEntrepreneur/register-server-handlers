@@ -7,8 +7,8 @@
     "build": "babel src -d dist",
     "lint": "eslint src __tests__ --ext=.js,.mjs",
     "lint:fix": "eslint --fix src __tests__ --ext=.js,.mjs",
-    "test": "DEBUG=tests jest --no-cache --config ./jest.json --coverage --verbose",
-    "test:watch": "DEBUG=tests jest --config jest.json --watch --coverage --verbose",
+    "test": "DEBUG=tests,register-server-handlers jest --no-cache --config ./jest.json --coverage --verbose",
+    "test:watch": "DEBUG=tests,register-server-handlers jest --config jest.json --watch --coverage --verbose",
     "prepare": "husky install",
     "semantic-release": "semantic-release"
   },

@@ -38,8 +38,15 @@ export const registerHandlers = async (options) => {
 }
 
 export const validateModuleAndAddToHandlers = (importedModule, handlers, file) => {
-  const messageType = path.parse(file).name
-  info('imported module', importedModule, handlers, file)
+  if (file.includes('.d.ts') || file.includes('.js.map')) {
+    return handlers
+  }
+
+  const fileInfo = path.parse(file)
+  const fileName = fileInfo.name
+  const messageType = fileName
+
+  info('imported module', importedModule, handlers, file, fileName)
 
   if (!importedModule.handle) return handlers
 
