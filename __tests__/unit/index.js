@@ -97,12 +97,26 @@ describe('registerHandlers', () => {
 })
 
 describe('validateModuleAndAddToHandlers', () => {
-  it('should validate modules and add them ', () => {
+  it('should validate .mjs modules and add them ', () => {
     const importedModule = {
       handle: jest.fn()
     }
     const result = {}
     const file = 'fake.command.mjs'
+    const handlers = validateModuleAndAddToHandlers(importedModule, result, file)
+
+    expect(handlers['fake.command']).toEqual({
+      handle: importedModule.handle,
+      type: 'fake.command'
+    })
+  })
+
+  it('should validate .js modules and add them ', () => {
+    const importedModule = {
+      handle: jest.fn()
+    }
+    const result = {}
+    const file = 'fake.command.js'
     const handlers = validateModuleAndAddToHandlers(importedModule, result, file)
 
     expect(handlers['fake.command']).toEqual({
@@ -119,12 +133,35 @@ describe('validateModuleAndAddToHandlers', () => {
 
     expect(handlers).toEqual({})
   })
+
   it('should not add modules with invalid handlers ', () => {
     const importedModule = {
       handle: 'turtle'
     }
     const result = {}
     const file = 'fake.command.mjs'
+    const handlers = validateModuleAndAddToHandlers(importedModule, result, file)
+
+    expect(handlers).toEqual({})
+  })
+
+  it('should not import .map files', () => {
+    const importedModule = {
+      handle: jest.fn()
+    }
+    const result = {}
+    const file = 'fake.command.js.map'
+    const handlers = validateModuleAndAddToHandlers(importedModule, result, file)
+
+    expect(handlers).toEqual({})
+  })
+
+  it('should not import .d.ts files', () => {
+    const importedModule = {
+      handle: jest.fn()
+    }
+    const result = {}
+    const file = 'fake.command.d.ts'
     const handlers = validateModuleAndAddToHandlers(importedModule, result, file)
 
     expect(handlers).toEqual({})
