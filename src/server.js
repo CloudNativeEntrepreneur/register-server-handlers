@@ -17,6 +17,8 @@ export const wrapInputInCloudEventThenHandle = (handler, handlerOptions = {}) =>
     data: req.body.input
   })
 
+  info(`processing ${handler.type} with CloudEvent ${JSON.stringify(event, null, 2)}`)
+
   if (typeof handler.where === 'function' && !handler.where(event)) {
     reply.code(400)
       .header('Content-Type', 'application/json')
