@@ -86,6 +86,8 @@ export const handle = async (request, reply, message, handlerOptions) => {
 
 This will register `/example.initialize` as an HTTP Post endpoint.
 
+If an error occurs in the handler, you should try to catch and reply with an appropriate error code. Unhandled exceptions are logged via `debug` and a reply code of `500` is sent.
+
 ## CloudEvents
 
 If you expect to receive messages in the [CloudEvents format](https://cloudevents.io/), you can set `cloudevents: true`.
