@@ -52,34 +52,6 @@ describe('server-cloudevents', () => {
       jest.clearAllMocks()
     })
 
-    it('should reply with code 415 if there is an error', () => {
-      const handler = {
-        type: 'example.command',
-        handle: jest.fn()
-      }
-      const req = {
-        headers: {},
-        body: {}
-      }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
-        }))
-      }
-
-      const { HTTP } = require('cloudevents')
-      HTTP.toEvent.mockImplementationOnce(() => {
-        throw new Error('blow up')
-      })
-
-      parseCloudEventThenHandle(handler)(req, reply)
-
-      expect(handler.handle).not.toBeCalled()
-      expect(reply.code).toBeCalledWith(415)
-    })
-
     it('should parse the CE and pass along to the handler', () => {
       const handler = {
         type: 'example.command',
