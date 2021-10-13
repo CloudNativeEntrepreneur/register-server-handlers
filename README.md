@@ -70,17 +70,17 @@ For example, `src/handlers/example.initialize.js`:
 ```javascript
 // if message.data.id is not provided, a 400 response will be sent and the handler will not execute
 // makes for easy, declarative validation and unit testing
-export const where = (message) => message.data && message.data.id
+export const where = (message) => !!(message.data && message.data.id)
 
 // `message` is a CloudEvent
 // `type` is the file name without the extension - `example.initialize`
-export const handle = async (req, reply, message, handlerOptions) => {
+export const handle = async (request, reply, message, handlerOptions) => {
   const { data, type, source } = message
   const { id } = message
   const { sync } = handlerOptions
   // do stuff
   // then reply
-  return reply.code(200).send({ status: 'complete' })
+  reply.code(200).send({ status: 'complete' })
 }
 ```
 
