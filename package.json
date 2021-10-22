@@ -33,7 +33,7 @@
     "@babel/plugin-transform-runtime": "7.15.8",
     "@babel/preset-env": "7.15.8",
     "codecov": "3.8.3",
-    "eslint": "8.0.1",
+    "eslint": "8.1.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-node": "11.1.0",
