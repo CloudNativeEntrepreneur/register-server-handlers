@@ -9,13 +9,13 @@ export const registerHandlerRoute = (server, handler, serverPath = '/', handlerO
   server.post(`${serverPath}${handler.type}`, parseCloudEventThenHandle(handler, handlerOptions))
 }
 
-export const parseCloudEventThenHandle = (handler, handlerOptions = {}) => async (request, reply) => {
+export const parseCloudEventThenHandle = (handler, handlerOptions = {}) => async (req, res) => {
   info(`parsing cloud event for handler ${handler.type}`)
 
   const cloudevent = HTTP.toEvent({
-    headers: request.headers,
-    body: request.body
+    headers: req.headers,
+    body: req.body
   })
 
-  await handleCloudEvent({ request, reply, handler, handlerOptions, cloudevent })
+  await handleCloudEvent({ req, res, handler, handlerOptions, cloudevent })
 }

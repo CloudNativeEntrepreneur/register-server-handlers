@@ -9,14 +9,14 @@ export const registerHandlerRoute = (server, handler, serverPath = '/', handlerO
   server.post(`${serverPath}${handler.type}`, wrapInputInCloudEventThenHandle(handler, handlerOptions))
 }
 
-export const wrapInputInCloudEventThenHandle = (handler, handlerOptions = {}) => async (request, reply) => {
+export const wrapInputInCloudEventThenHandle = (handler, handlerOptions = {}) => async (req, res) => {
   info(`creating cloudevent from POST for handler ${handler.type}`)
 
   const cloudevent = new CloudEvent({
     type: handler.type,
     source: 'http-post',
-    data: request.body.input
+    data: req.body.input
   })
 
-  await handleCloudEvent({ request, reply, handler, handlerOptions, cloudevent })
+  await handleCloudEvent({ req, res, handler, handlerOptions, cloudevent })
 }

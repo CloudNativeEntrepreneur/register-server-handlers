@@ -61,18 +61,16 @@ describe('server-cloudevents', () => {
         headers: {},
         body: {}
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      parseCloudEventThenHandle(handler)(req, reply)
+      parseCloudEventThenHandle(handler)(req, res)
 
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
-        reply,
+        res,
         {
           type: 'example.commmand',
           data: {
@@ -96,14 +94,12 @@ describe('server-cloudevents', () => {
         headers: {},
         body: {}
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      parseCloudEventThenHandle(handler)(req, reply)
+      parseCloudEventThenHandle(handler)(req, res)
 
       expect(handler.where).toBeCalled()
       expect(handler.handle).toBeCalled()
@@ -121,17 +117,15 @@ describe('server-cloudevents', () => {
         headers: {},
         body: {}
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      parseCloudEventThenHandle(handler)(req, reply)
+      parseCloudEventThenHandle(handler)(req, res)
 
       expect(handler.where).toBeCalled()
-      expect(reply.code).toBeCalledWith(400)
+      expect(res.status).toBeCalledWith(400)
       expect(handler.handle).not.toBeCalled()
     })
   })

@@ -21,10 +21,10 @@ On startup, call `registerHandlers`
 
 ```javascript
 import path from 'path'
-import fastify from 'fastify'
+import express from 'express'
 import { registerHandlers } from 'register-server-handlers'
 
-const server = fastify({
+const server = express({
   ignoreTrailingSlash: true,
   logger: true
 })
@@ -85,8 +85,6 @@ export const handle = async (request, reply, message, handlerOptions) => {
 ```
 
 This will register `/example.initialize` as an HTTP Post endpoint.
-
-If an error occurs in the handler, you should try to catch and reply with an appropriate error code. Unhandled exceptions are logged via `debug` and a reply code of `500` is sent.
 
 ## CloudEvents
 
