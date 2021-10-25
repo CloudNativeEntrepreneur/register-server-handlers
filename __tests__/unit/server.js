@@ -50,18 +50,16 @@ describe('server', () => {
           }
         }
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, reply)
+      wrapInputInCloudEventThenHandle(handler)(req, res)
 
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
-        reply,
+        res,
         expect.objectContaining({
           type: 'example.command',
           data: {
@@ -89,19 +87,17 @@ describe('server', () => {
           }
         }
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, reply)
+      wrapInputInCloudEventThenHandle(handler)(req, res)
 
       expect(handler.where).toBeCalled()
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
-        reply,
+        res,
         expect.objectContaining({
           type: 'example.command',
           data: {
@@ -129,17 +125,15 @@ describe('server', () => {
           }
         }
       }
-      const reply = {
-        code: jest.fn(() => ({
-          header: jest.fn(() => ({
-            send: jest.fn()
-          }))
+      const res = {
+        status: jest.fn(() => ({
+          json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, reply)
+      wrapInputInCloudEventThenHandle(handler)(req, res)
 
       expect(handler.where).toBeCalled()
-      expect(reply.code).toBeCalledWith(400)
+      expect(res.status).toBeCalledWith(400)
       expect(handler.handle).not.toBeCalled()
     })
   })

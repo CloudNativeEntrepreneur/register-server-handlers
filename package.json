@@ -1,7 +1,7 @@
 {
   "name": "register-server-handlers",
   "version": "0.0.0-development",
-  "description": "Registers a folder of handlers as HTTP POST routes on a server (fastify, express) that parses cloudevents from payload before sending to handler",
+  "description": "Registers a folder of handlers as HTTP POST routes on a server (express) that parses cloudevents from payload before sending to handler",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
