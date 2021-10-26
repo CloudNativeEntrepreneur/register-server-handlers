@@ -44,6 +44,9 @@
     "lint-staged": "11.2.4",
     "semantic-release": "18.0.0"
   },
+  "peerDependencies": {
+    "express": "4.x"
+  },
   "lint-staged": {
     "*.{js,mjs}": "eslint --cache --fix"
   }
