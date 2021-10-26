@@ -6,8 +6,8 @@ describe('handleCloudEvent', () => {
   })
 
   it('should call handler with a cloudevent', async () => {
-    const req = {}
-    const res = {}
+    const request = {}
+    const response = {}
     const handler = {
       handle: jest.fn(() => Promise.resolve({ id: 'test' }))
     }
@@ -21,18 +21,18 @@ describe('handleCloudEvent', () => {
     }
 
     await handleCloudEvent({
-      req,
-      res,
+      request,
+      response,
       handler,
       handlerOptions,
       cloudevent
     })
 
-    expect(handler.handle).toBeCalledWith(req, res, cloudevent, handlerOptions)
+    expect(handler.handle).toBeCalledWith(request, response, cloudevent, handlerOptions)
   })
-  it('should res with 500 when handler has unhandled error', async () => {
-    const req = {}
-    const res = {
+  it('should response with 500 when handler has unhandled error', async () => {
+    const request = {}
+    const response = {
       status: jest.fn(() => ({
         json: jest.fn()
       }))
@@ -51,13 +51,13 @@ describe('handleCloudEvent', () => {
     }
 
     await handleCloudEvent({
-      req,
-      res,
+      request,
+      response,
       handler,
       handlerOptions,
       cloudevent
     })
 
-    expect(res.status).toBeCalledWith(500)
+    expect(response.status).toBeCalledWith(500)
   })
 })

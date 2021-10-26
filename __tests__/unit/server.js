@@ -42,7 +42,7 @@ describe('server', () => {
         type: 'example.command',
         handle: jest.fn()
       }
-      const req = {
+      const request = {
         headers: {},
         body: {
           input: {
@@ -50,16 +50,16 @@ describe('server', () => {
           }
         }
       }
-      const res = {
+      const response = {
         status: jest.fn(() => ({
           json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, res)
+      wrapInputInCloudEventThenHandle(handler)(request, response)
 
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
-        res,
+        response,
         expect.objectContaining({
           type: 'example.command',
           data: {
@@ -79,7 +79,7 @@ describe('server', () => {
                             message.data.id
       }
       jest.spyOn(handler, 'where')
-      const req = {
+      const request = {
         headers: {},
         body: {
           input: {
@@ -87,17 +87,17 @@ describe('server', () => {
           }
         }
       }
-      const res = {
+      const response = {
         status: jest.fn(() => ({
           json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, res)
+      wrapInputInCloudEventThenHandle(handler)(request, response)
 
       expect(handler.where).toBeCalled()
       expect(handler.handle).toBeCalledWith(
         expect.any(Object),
-        res,
+        response,
         expect.objectContaining({
           type: 'example.command',
           data: {
@@ -117,7 +117,7 @@ describe('server', () => {
                             message.data.foo
       }
       jest.spyOn(handler, 'where')
-      const req = {
+      const request = {
         headers: {},
         body: {
           input: {
@@ -125,15 +125,15 @@ describe('server', () => {
           }
         }
       }
-      const res = {
+      const response = {
         status: jest.fn(() => ({
           json: jest.fn()
         }))
       }
-      wrapInputInCloudEventThenHandle(handler)(req, res)
+      wrapInputInCloudEventThenHandle(handler)(request, response)
 
       expect(handler.where).toBeCalled()
-      expect(res.status).toBeCalledWith(400)
+      expect(response.status).toBeCalledWith(400)
       expect(handler.handle).not.toBeCalled()
     })
   })
