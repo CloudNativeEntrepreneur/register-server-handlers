@@ -24,10 +24,7 @@ import path from 'path'
 import express from 'express'
 import { registerHandlers } from 'register-server-handlers'
 
-const server = express({
-  ignoreTrailingSlash: true,
-  logger: true
-})
+const server = express()
 
 export const start = async (server) => {
 
