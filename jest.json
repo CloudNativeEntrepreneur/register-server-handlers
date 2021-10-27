@@ -1,5 +1,6 @@
 {
   "roots": ["<rootDir>/src", "<rootDir>/__tests__/unit"],
+  "preset": "ts-jest",
   "testEnvironment": "node",
   "modulePaths": [
     "<rootDir>/src"
@@ -9,11 +10,8 @@
   ],
   "moduleFileExtensions": [
     "js",
-    "mjs"
+    "ts"
   ],
-  "transform": {
-    "^.+\\.m?js$": "babel-jest"
-  },
   "coverageThreshold": {
     "global": {
       "branches": 100,
@@ -22,9 +20,5 @@
       "statements": 100
     }
   },
-  "collectCoverageFrom" : [
-    "src/**/*.{js,jsx,mjs}"
-  ],
-  "testTimeout": 30000
-}  
-  
+  "collectCoverageFrom": ["src/*.(js|ts)"]
+}
