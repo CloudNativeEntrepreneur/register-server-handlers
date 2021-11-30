@@ -3,7 +3,7 @@
 
 # register-server-handlers
 
-Registers a folder of handlers as HTTP POST routes on a server.
+Registers a folder of handlers as HTTP POST routes on a server - handlers receive commands/events in CloudEvents format.
 
 View [on npm](https://www.npmjs.com/package/register-server-handlers).
 
