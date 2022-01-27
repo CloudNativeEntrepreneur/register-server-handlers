@@ -61,6 +61,7 @@ describe("server", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };
@@ -97,6 +98,7 @@ describe("server", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };
@@ -134,6 +136,7 @@ describe("server", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };

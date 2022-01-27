@@ -22,15 +22,15 @@ export const handleCloudEvent = async ({
   );
 
   if (typeof handler.where === "function" && !handler.where(cloudevent)) {
-    return response
-      .status(400)
-      .json({ err: "🚨 Message does not match where filter criteria" });
+    const message = "🚨 Message does not match where filter criteria";
+    info(message);
+    return response.status(400).send(message);
   } else {
     try {
       await handler.handle(request, response, cloudevent, handlerOptions);
     } catch (err) {
       error(err);
-      return response.status(500).json(err);
+      return response.status(500).send(`Error with handler ${err}`);
     }
   }
 };

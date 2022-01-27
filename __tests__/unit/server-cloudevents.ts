@@ -72,6 +72,7 @@ describe("server-cloudevents", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };
@@ -104,6 +105,7 @@ describe("server-cloudevents", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };
@@ -126,6 +128,7 @@ describe("server-cloudevents", () => {
       };
       const response = {
         status: jest.fn(() => ({
+          send: jest.fn(),
           json: jest.fn(),
         })),
       };
