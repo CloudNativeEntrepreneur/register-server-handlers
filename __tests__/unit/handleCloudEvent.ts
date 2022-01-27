@@ -40,6 +40,7 @@ describe("handleCloudEvent", () => {
     const response = {
       status: jest.fn(() => ({
         json: jest.fn(),
+        send: jest.fn(),
       })),
     };
     const handler = {
