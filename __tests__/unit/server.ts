@@ -143,7 +143,7 @@ describe("server", () => {
       wrapInputInCloudEventThenHandle(handler)(request, response);
 
       expect(handler.where).toBeCalled();
-      expect(response.status).toBeCalledWith(400);
+      expect(response.status).toBeCalledWith(202);
       expect(handler.handle).not.toBeCalled();
     });
   });

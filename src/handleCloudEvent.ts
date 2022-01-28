@@ -24,13 +24,13 @@ export const handleCloudEvent = async ({
   if (typeof handler.where === "function" && !handler.where(cloudevent)) {
     const message = "🚨 Message does not match where filter criteria";
     info(message);
-    return response.status(400).send(message);
+    return response.status(202).send();
   } else {
     try {
       await handler.handle(request, response, cloudevent, handlerOptions);
     } catch (err) {
       error(err);
-      return response.status(500).send(`Error with handler ${err}`);
+      return response.status(500).send();
     }
   }
 };

@@ -65,8 +65,9 @@ Each handler in the given directory must export a named function `handle`, and o
 For example, `src/handlers/example.initialize.js`:
 
 ```javascript
-// if message.data.id is not provided, a 400 response will be sent and the handler will not execute
+// if message.data.id is not provided, a 202 response will be sent and the handler will not execute
 // makes for easy, declarative validation and unit testing
+// https://github.com/knative/specs/blob/main/specs/eventing/data-plane.md#event-acknowledgement-and-delivery-retry
 export const where = (message) => !!(message.data && message.data.id)
 
 // `message` is a CloudEvent
@@ -77,7 +78,7 @@ export const handle = async (request, reply, message, handlerOptions) => {
   const { sync } = handlerOptions
   // do stuff
   // then reply
-  reply.code(200).send({ status: 'complete' })
+  reply.status(200).send()
 }
 ```
 
